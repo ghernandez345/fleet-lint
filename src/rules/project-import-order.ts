@@ -1,3 +1,4 @@
+import { DEFAULT_PROJECT_PATH_ORDER } from '../utils/constants';
 import { createRule } from '../utils/create-rule';
 
 type Options = [
@@ -7,18 +8,6 @@ type Options = [
 ];
 
 type MessageIds = 'incorrectProjectOrder';
-
-const defaultProjectPaths = [
-  'interfaces',
-  'services',
-  'context',
-  'utilities',
-  'hooks',
-  'router',
-  'pages',
-  'components',
-  'assets',
-];
 
 function getProjectPathIndex(
   importPath: string,
@@ -31,7 +20,7 @@ function getProjectPathIndex(
 export default createRule<Options, MessageIds>({
   name: 'project-import-order',
   meta: {
-    type: 'suggestion',
+    type: 'layout',
     docs: {
       description:
         'Enforce a specific order for project imports based on configured path prefixes',
@@ -55,9 +44,9 @@ export default createRule<Options, MessageIds>({
         'Project imports must follow the specified order. "{{current}}" should come before "{{previous}}".',
     },
   },
-  defaultOptions: [{ projectPaths: defaultProjectPaths }],
+  defaultOptions: [{ projectPaths: DEFAULT_PROJECT_PATH_ORDER }],
   create(context) {
-    const options = context.options[0] || { projectPaths: defaultProjectPaths };
+    const options = context.options[0] || { projectPaths: DEFAULT_PROJECT_PATH_ORDER };
     const { projectPaths } = options;
 
     interface ImportInfo {
@@ -70,7 +59,7 @@ export default createRule<Options, MessageIds>({
 
     return {
       ImportDeclaration(node) {
-        const source = node.source.value as string;
+        const source = node.source.value;
 
         if (source.startsWith('.') || source.startsWith('/')) {
           return;

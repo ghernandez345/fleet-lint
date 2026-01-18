@@ -1,3 +1,4 @@
+import { DEFAULT_PROJECT_PATH_ORDER } from '../utils/constants';
 import { createRule } from '../utils/create-rule';
 
 type Options = [
@@ -7,18 +8,6 @@ type Options = [
 ];
 
 type MessageIds = 'nodeModulesFirst';
-
-const defaultProjectPaths = [
-  'interfaces',
-  'services',
-  'context',
-  'utilities',
-  'hooks',
-  'router',
-  'pages',
-  'components',
-  'assets',
-];
 
 function isNodeModule(importPath: string, projectPaths: string[]): boolean {
   if (importPath.startsWith('.') || importPath.startsWith('/')) {
@@ -56,9 +45,9 @@ export default createRule<Options, MessageIds>({
         'Node module imports must come before project imports. "{{current}}" (node module) should be before "{{previous}}" (project import).',
     },
   },
-  defaultOptions: [{ projectPaths: defaultProjectPaths }],
+  defaultOptions: [{ projectPaths: DEFAULT_PROJECT_PATH_ORDER }],
   create(context) {
-    const options = context.options[0] || { projectPaths: defaultProjectPaths };
+    const options = context.options[0] || { projectPaths: DEFAULT_PROJECT_PATH_ORDER };
     const { projectPaths } = options;
 
     interface ImportInfo {
