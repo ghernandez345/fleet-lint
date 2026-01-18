@@ -10,7 +10,7 @@ const recommended: Linter.Config = {
     'plugin:storybook/recommended',
   ],
   parser: '@typescript-eslint/parser',
-  plugins: ['jest', 'react', '@typescript-eslint'],
+  plugins: ['jest', 'react', '@typescript-eslint', 'fleet-lint'],
   env: {
     node: true,
     mocha: true,
@@ -69,6 +69,8 @@ const recommended: Linter.Config = {
     '@typescript-eslint/no-shadow': 'error',
     'jsx-a11y/heading-has-content': 'off',
     'jsx-a11y/anchor-has-content': 'off',
+    'fleet-lint/node-modules-first': 'error',
+    'fleet-lint/project-import-order': 'error',
   },
   overrides: [],
   settings: {
